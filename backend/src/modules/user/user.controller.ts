@@ -1,6 +1,13 @@
 import type {User} from "./user.types";
+import {randomUUID} from "node:crypto";
+
 // in-memory DB
 let users: User[] = [];
+
+// for testing purposes only
+export const resetUsers = () => {
+  users = [];
+};
 
 // get all users
 export const getUsers = () => users;
@@ -11,7 +18,7 @@ export const getUserById = (_: any, args: {id: string}) => {
 // create a new user, return the created user
 export const createUser = (_: any, args: {name: string; email: string}) => {
   const newUser: User = {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     name: args.name,
     email: args.email,
   };
