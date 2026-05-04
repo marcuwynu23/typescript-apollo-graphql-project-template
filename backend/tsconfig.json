@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "node20",
     "target": "es2023",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node16",
     "esModuleInterop": true,
-    "types": ["node"],
+    "isolatedModules": true,
+    "types": ["node", "jest"],
     "strict": true,
     "rootDir": "src",
     "outDir": "dist"
