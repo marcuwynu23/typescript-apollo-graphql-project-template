@@ -1,8 +1,11 @@
 import {useMutation, useQuery} from "@apollo/client/react";
 import userQuery from "./query/user";
 import type {User} from "./types/user";
+import {useState} from "react";
 
 function App() {
+  const [user, setUser] = useState<User | null>(null);
+
   const {data, loading, error} = useQuery<{users: User[]}>(userQuery.GET_USERS);
   const [createUser] = useMutation<
     {createUser: User},
@@ -29,8 +32,8 @@ function App() {
     try {
       const {data} = await createUser({
         variables: {
-          name: "New User",
-          email: "user@app.com",
+          name: user?.name || "New User",
+          email: user?.email || "user@app.com",
         },
       });
 
@@ -45,8 +48,8 @@ function App() {
       const {data} = await updateUser({
         variables: {
           id,
-          name: "Updated User",
-          email: "update-user@app.com",
+          name: user?.name || "Updated User",
+          email: user?.email || "update-user@app.com",
         },
       });
 
@@ -74,6 +77,24 @@ function App() {
   return (
     <>
       <h1>Users</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Name"
+          value={user?.name || ""}
+          onChange={(e) =>
+            setUser((prev) => ({...prev, name: e.target.value}) as User)
+          }
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={user?.email || ""}
+          onChange={(e) =>
+            setUser((prev) => ({...prev, email: e.target.value}) as User)
+          }
+        />
+      </div>
 
       <button onClick={handleCreateUser}>Create User</button>
 
