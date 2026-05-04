@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "bundle": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.5.0",
+    "esbuild": "^0.27.7",
+    "get-tsconfig": "^4.14.0",
+    "graphql": "^16.13.2",
+    "resolve-pkg-maps": "^1.0.0",
+    "undici-types": "^7.19.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
