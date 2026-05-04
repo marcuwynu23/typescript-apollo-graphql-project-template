@@ -1,29 +1,25 @@
-type User = {
-  id: string;
-  name: string;
-  email: string;
-};
-
+import type {User} from "./user.types";
 // in-memory DB
 let users: User[] = [];
 
+// get all users
 export const getUsers = () => users;
-
+// get a user by id, return null if not found
 export const getUserById = (_: any, args: {id: string}) => {
   return users.find((u) => u.id === args.id) || null;
 };
-
+// create a new user, return the created user
 export const createUser = (_: any, args: {name: string; email: string}) => {
   const newUser: User = {
     id: crypto.randomUUID(),
     name: args.name,
     email: args.email,
   };
-
   users.push(newUser);
   return newUser;
 };
 
+// update a user by id, return the updated user or null if not found
 export const updateUser = (
   _: any,
   args: {id: string; name?: string; email?: string},
@@ -37,6 +33,7 @@ export const updateUser = (
   return user;
 };
 
+// delete a user by id, return true if deleted, false if not found
 export const deleteUser = (_: any, args: {id: string}) => {
   const initialLength = users.length;
   users = users.filter((u) => u.id !== args.id);
