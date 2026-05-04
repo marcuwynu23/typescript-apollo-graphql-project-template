@@ -16,6 +16,56 @@ A lightweight backend template for building GraphQL APIs using TypeScript, Apoll
 
 ---
 
+## Project Structure
+
+```
+├── README.md
+├── frontend
+│   ├── .gitignore
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   ├── vite.config.ts
+│   ├── src
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── app
+│   │   │   └── user
+│   │   │       ├── user.page.tsx
+│   │   │       ├── user.props.ts
+│   │   │       └── user.query.ts
+│   │   └── apollo
+│   │       └── apollo.ts
+│   └── public
+│       ├── favicon.svg
+│       └── icons.svg
+└── backend
+    ├── .gitignore
+    ├── jest.config.js
+    ├── package-lock.json
+    ├── package.json
+    ├── tsconfig.json
+    ├── src
+    │   ├── index.ts
+    │   ├── typedefs
+    │   │   └── index.ts
+    │   ├── resolvers
+    │   │   └── index.ts
+    │   └── modules
+    │       └── user
+    │           ├── user.controller.ts
+    │           ├── user.test.ts
+    │           └── user.types.ts
+    └── dist
+        └── index.js
+```
+
 ## Installation
 
 ```bash
