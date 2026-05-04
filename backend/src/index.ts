@@ -3,16 +3,19 @@ import {startStandaloneServer} from "@apollo/server/standalone";
 import {resolvers} from "./resolvers";
 import {typeDefs} from "./typedefs";
 
-async function startServer() {
+export async function startServer() {
   const server = new ApolloServer({
-    typeDefs: typeDefs,
+    typeDefs,
     resolvers,
   });
 
   const {url} = await startStandaloneServer(server, {
     listen: {port: 4000, host: "0.0.0.0"},
   });
+
   console.log(`Server ready at ${url}`);
 }
 
-startServer();
+if (require.main === module) {
+  startServer();
+}
