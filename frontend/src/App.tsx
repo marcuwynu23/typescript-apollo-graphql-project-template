@@ -1,52 +1,29 @@
-import {gql} from "@apollo/client";
 import {useMutation, useQuery} from "@apollo/client/react";
-
-const GET_USERS = gql`
-  query {
-    users {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_USER = gql`
-  mutation ($name: String!, $email: String!) {
-    createUser(name: $name, email: $email) {
-      id
-      name
-      email
-    }
-  }
-`;
-
-const UPDATE_USER = gql`
-  mutation ($id: ID!, $name: String, $email: String) {
-    updateUser(id: $id, name: $name, email: $email) {
-      id
-      name
-      email
-    }
-  }
-`;
-
-const DELETE_USER = gql`
-  mutation ($id: ID!) {
-    deleteUser(id: $id)
-  }
-`;
+import userQuery from "./query/user";
+import type {User} from "./types/user";
 
 function App() {
-  const {data, loading, error} = useQuery(GET_USERS);
-  const [createUser] = useMutation(CREATE_USER, {
-    refetchQueries: [{query: GET_USERS}],
+  const {data, loading, error} = useQuery<{users: User[]}>(userQuery.GET_USERS);
+  const [createUser] = useMutation<
+    {createUser: User},
+    {name: string; email: string}
+  >(userQuery.CREATE_USER, {
+    refetchQueries: [{query: userQuery.GET_USERS}],
   });
-  const [updateUser] = useMutation(UPDATE_USER, {
-    refetchQueries: [{query: GET_USERS}],
+
+  const [updateUser] = useMutation<
+    {updateUser: User},
+    {id: string; name: string; email: string}
+  >(userQuery.UPDATE_USER, {
+    refetchQueries: [{query: userQuery.GET_USERS}],
   });
-  const [deleteUser] = useMutation(DELETE_USER, {
-    refetchQueries: [{query: GET_USERS}],
-  });
+
+  const [deleteUser] = useMutation<{deleteUser: boolean}, {id: string}>(
+    userQuery.DELETE_USER,
+    {
+      refetchQueries: [{query: userQuery.GET_USERS}],
+    },
+  );
 
   const handleCreateUser = async () => {
     try {
@@ -56,11 +33,13 @@ function App() {
           email: "user@app.com",
         },
       });
-      console.log("User created:", data.createUser);
+
+      console.log("User created:", data?.createUser);
     } catch (err) {
       console.error("Error creating user:", err);
     }
   };
+
   const handleUpdateUser = async (id: string) => {
     try {
       const {data} = await updateUser({
@@ -70,7 +49,8 @@ function App() {
           email: "update-user@app.com",
         },
       });
-      console.log("User updated:", data.updateUser);
+
+      console.log("User updated:", data?.updateUser);
     } catch (err) {
       console.error("Error updating user:", err);
     }
@@ -81,7 +61,8 @@ function App() {
       const {data} = await deleteUser({
         variables: {id},
       });
-      console.log("User deleted:", data.deleteUser);
+
+      console.log("User deleted:", data?.deleteUser);
     } catch (err) {
       console.error("Error deleting user:", err);
     }
@@ -93,10 +74,11 @@ function App() {
   return (
     <>
       <h1>Users</h1>
+
       <button onClick={handleCreateUser}>Create User</button>
 
       <ul>
-        {data.users.map((user) => (
+        {data?.users?.map((user: User) => (
           <li key={user.id}>
             {user.name} - {user.email}
             <button onClick={() => handleDeleteUser(user.id)}>Delete</button>
