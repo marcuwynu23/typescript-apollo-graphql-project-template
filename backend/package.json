@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@apollo/server": "^5.5.0",
-    "esbuild": "^0.27.7",
+    "esbuild": "^0.28.1",
     "get-tsconfig": "^4.14.0",
     "graphql": "^16.13.2",
     "resolve-pkg-maps": "^1.0.0",
